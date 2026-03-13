@@ -30,21 +30,27 @@ int main() {
     int maximumLength = 2;
 
     for (int i = n-2; i >= 0; i--) {
+        
 
         for (int j = i+1; j < n; j++) {
             difference = sequence[j] - sequence[i];
+            
 
             if (isInMap(difference, j, DP)) {
-                DP[i][difference] = DP[j][difference] + 1;
+                
+                DP[i][difference] = max(DP[i][difference], DP[j][difference] + 1);
+
                 if (DP[i][difference] > maximumLength) {
                     maximumLength = DP[i][difference];
                 }
-            } else {
-                DP[i][difference] = 2;
             }
-
+            
+            if (!isInMap(difference, i, DP)) {
+                    DP[i][difference] = 2;
+                }
+            
         }
-    }
+    }   
     
     if (n == 1) {
         cout << 1;
